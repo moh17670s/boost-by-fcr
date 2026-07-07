@@ -8,10 +8,7 @@ import {
   Eye,
   Star,
   Search,
-  Filter,
-  ChevronDown,
-  ChevronUp,
-  Info
+  Filter
 } from 'lucide-react';
 import { PageLayout } from '../components/PageLayout';
 import { SectionDivider } from '../components/SectionDivider';

@@ -1,27 +1,21 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { 
   BookOpen, 
   ChevronLeft, 
   ChevronRight, 
-  List,
-  Clock,
   User,
   Calendar,
   Bookmark,
   Share2,
   Printer,
   Search,
-  Info,
   CheckCircle2,
   Circle,
-  Maximize2,
-  Minimize2,
   StickyNote,
   Download,
   BarChart3
 } from 'lucide-react';
-import { SectionDivider } from '../components/SectionDivider';
 import { InfoBanner } from '../components/InfoBanner';
 import { GuideSection } from '../components/GuideSection';
 import { FutureFeatures } from '../components/FutureFeatures';
@@ -48,10 +42,9 @@ const TOCItem = ({ number, title, isActive, onClick, isCompleted }: any) => (
 
 export const HandbookReader = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [activeChapter, setActiveChapter] = useState(0);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [fullscreen, setFullscreen] = useState(false);
+  const sidebarOpen = true;  // ← changed from useState
+  const fullscreen = false;  // ← changed from useState
   const [completedChapters, setCompletedChapters] = useState<number[]>([]);
 
   const handbookInfo = {

@@ -1,17 +1,15 @@
-import { useState } from 'react';
 import { 
   Heart, 
   Phone, 
   Globe, 
   AlertTriangle,
   ExternalLink,
-  Info,
-  Mail,
   Shield,
   BookOpen,
   Clock,
   MapPin,
-  MessageSquare
+  MessageSquare,
+  type LucideIcon
 } from 'lucide-react';
 import { PageLayout } from '../components/PageLayout';
 import { SectionDivider } from '../components/SectionDivider';
@@ -19,8 +17,18 @@ import { InfoBanner } from '../components/InfoBanner';
 import { GuideSection } from '../components/GuideSection';
 import { FutureFeatures } from '../components/FutureFeatures';
 
-// Resource card component with RED icon
-const ResourceCard = ({ icon: Icon, title, description, link, linkText, badge }) => (
+// ── Types ─────────────────────────────────────────────────
+interface ResourceCardProps {
+  icon: LucideIcon;
+  badge?: string;
+  title: string;
+  description: string;
+  link: string;
+  linkText: string;
+}
+
+// ── Resource card component with RED icon ──────────────
+const ResourceCard = ({ icon: Icon, title, description, link, linkText, badge }: ResourceCardProps) => (
   <div className="bg-surface-card border border rounded-card p-6 hover:border-accent transition-all duration-300 group">
     <div className="flex items-start justify-between mb-4">
       <div className="w-12 h-12 bg-boost-red/10 rounded-xl flex items-center justify-center">

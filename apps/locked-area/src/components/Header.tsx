@@ -1,11 +1,9 @@
 ﻿import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
-import { useState } from "react";
 
 export default function Header() {
   const { logout } = useAuth();
   const location = useLocation();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/";

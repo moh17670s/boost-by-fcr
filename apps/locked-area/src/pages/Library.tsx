@@ -6,7 +6,6 @@ import {
   Target, 
   BookOpen, 
   Filter, 
-  ArrowRight, 
   Info, 
   X, 
   Dumbbell, 
@@ -19,8 +18,6 @@ import {
 } from 'lucide-react';
 import { useExercises } from '../hooks/useExercises';
 import { useAuth } from '../auth/useAuth';
-import { SectionDivider } from '../components/SectionDivider';
-import { InfoBanner } from '../components/InfoBanner';
 import { GuideSection } from '../components/GuideSection';
 import { FutureFeatures } from '../components/FutureFeatures';
 
