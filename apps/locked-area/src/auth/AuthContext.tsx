@@ -443,20 +443,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           body: JSON.stringify({
             to: found.email,
             name: found.name,
-            subject: 'Ã…terstÃ¤ll ditt lÃ¶senord',
-            html: `
-              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #1e3a5f;">Ã…terstÃ¤ll ditt lÃ¶senord</h2>
-                <p>Hej ${found.name},</p>
-                <p>Du har begÃ¤rt att Ã¥terstÃ¤lla ditt lÃ¶senord. Klicka pÃ¥ lÃ¤nken nedan:</p>
-                <p style="margin: 24px 0;">
-                  <a href="${resetUrl}" style="background: #e0bd4a; color: #1e3a5f; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                    Ã…terstÃ¤ll lÃ¶senord
-                  </a>
-                </p>
-                <p style="color: #999; font-size: 12px;">LÃ¤nken Ã¤r giltig i 1 timme.</p>
-              </div>
-            `,
+            resetUrl: resetUrl,
           }),
         })
 
@@ -573,4 +560,5 @@ export function useAuth() {
   }
   return context
 }
+
 
