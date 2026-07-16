@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
+﻿import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
 
-// ── Types ───────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface Member {
   id: string
@@ -24,20 +24,20 @@ interface AuthContextValue {
   logout: () => void
 }
 
-// ── Context ───────────────────────────────────────────────
+// â”€â”€ Context â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 const HYGRAPH_ENDPOINT = import.meta.env.VITE_HYGRAPH_URL
 const HYGRAPH_TOKEN = import.meta.env.VITE_HYGRAPH_TOKEN_LOCKED
 
-// ── Provider ────────────────────────────────────────────
+// â”€â”€ Provider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<Member | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // ── ONE-TIME CLEANUP: Remove old vulnerable fcr_user key ──
+  // â”€â”€ ONE-TIME CLEANUP: Remove old vulnerable fcr_user key â”€â”€
   useEffect(() => {
     const oldUser = localStorage.getItem('fcr_user')
     if (oldUser) {
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  // ── Secure: Validate credentials against Hygraph on every load ──
+  // â”€â”€ Secure: Validate credentials against Hygraph on every load â”€â”€
   const validateSession = useCallback(async () => {
     const sessionEmail = localStorage.getItem('fcr_session_email')
     const sessionHash = localStorage.getItem('fcr_session_hash')
@@ -175,7 +175,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('')
   }
 
-  // ── Login ───────────────────────────────────────────
+  // â”€â”€ Login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const login = async (email: string, password: string) => {
     try {
@@ -198,26 +198,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (errors) {
         console.error('GraphQL errors:', JSON.stringify(errors, null, 2))
-        return { success: false, error: errors[0]?.message || 'Databasfel. Försök igen.' }
+        return { success: false, error: errors[0]?.message || 'Databasfel. FÃ¶rsÃ¶k igen.' }
       }
 
       const members = data?.members
       if (!members || members.length === 0) {
-        return { success: false, error: 'Felaktig e-post eller lösenord' }
+        return { success: false, error: 'Felaktig e-post eller lÃ¶senord' }
       }
 
       const found = members[0]
 
       if (found.password !== hashedPassword) {
-        return { success: false, error: 'Felaktig e-post eller lösenord' }
+        return { success: false, error: 'Felaktig e-post eller lÃ¶senord' }
       }
 
       if (!found.isVerified) {
-        return { success: false, error: 'Ditt konto är inte verifierat. Kontrollera din e-post och klicka på verifieringslänken.' }
+        return { success: false, error: 'Ditt konto Ã¤r inte verifierat. Kontrollera din e-post och klicka pÃ¥ verifieringslÃ¤nken.' }
       }
 
       if (!found.isApproved) {
-        return { success: false, error: 'Ditt konto väntar på godkännande från administratören.' }
+        return { success: false, error: 'Ditt konto vÃ¤ntar pÃ¥ godkÃ¤nnande frÃ¥n administratÃ¶ren.' }
       }
 
       const memberData: Member = {
@@ -236,11 +236,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: true }
     } catch (err) {
       console.error('Login error:', err)
-      return { success: false, error: 'Ett fel uppstod. Försök igen.' }
+      return { success: false, error: 'Ett fel uppstod. FÃ¶rsÃ¶k igen.' }
     }
   }
 
-  // ── Register ────────────────────────────────────────
+  // â”€â”€ Register â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const register = async (name: string, email: string, password: string) => {
     try {
@@ -252,7 +252,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       )
 
       if (existing?.members?.length > 0) {
-        return { success: false, error: 'E-postadressen är redan registrerad' }
+        return { success: false, error: 'E-postadressen Ã¤r redan registrerad' }
       }
 
       const hashedPassword = hashPassword(password)
@@ -278,19 +278,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (errors) {
         console.error('GraphQL errors:', JSON.stringify(errors, null, 2))
-        return { success: false, error: 'Kunde inte skapa konto. Försök igen.' }
+        return { success: false, error: 'Kunde inte skapa konto. FÃ¶rsÃ¶k igen.' }
       }
 
       if (!data?.createMember) {
-        return { success: false, error: 'Kunde inte skapa konto. Försök igen.' }
+        return { success: false, error: 'Kunde inte skapa konto. FÃ¶rsÃ¶k igen.' }
       }
 
       const memberId = data.createMember.id
       const verificationUrl = `${window.location.origin}/verify-email?token=${verificationToken}`
 
-      // ── Send verification email via Pages Function ──
+      // â”€â”€ Send verification email via Pages Function â”€â”€
       try {
-        console.log('📧 Sending verification email to:', email)
+        console.log('ðŸ“§ Sending verification email to:', email)
 
         const res = await fetch('/send-verification-email', {
           method: 'POST',
@@ -304,15 +304,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (!res.ok) {
           const errorText = await res.text()
-          console.error('❌ Email API error:', res.status, errorText)
+          console.error('âŒ Email API error:', res.status, errorText)
         } else {
-          console.log('✅ Verification email sent via Pages Function')
+          console.log('âœ… Verification email sent via Pages Function')
         }
       } catch (err) {
-        console.error('❌ Failed to send verification email:', err)
+        console.error('âŒ Failed to send verification email:', err)
       }
 
-      // ── Publish the member ──
+      // â”€â”€ Publish the member â”€â”€
       await hygraphFetch(
         `mutation PublishMember($id: ID!) {
           publishMember(where: { id: $id }) {
@@ -326,11 +326,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     } catch (err) {
       console.error('Register error:', err)
-      return { success: false, error: 'Ett fel uppstod. Försök igen.' }
+      return { success: false, error: 'Ett fel uppstod. FÃ¶rsÃ¶k igen.' }
     }
   }
 
-  // ── Verify Email ────────────────────────────────────
+  // â”€â”€ Verify Email â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const verifyEmail = async (token: string) => {
     try {
@@ -349,7 +349,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const members = data?.members
       if (!members || members.length === 0) {
-        return { success: false, error: 'Ogiltig eller utgången verifieringslänk.' }
+        return { success: false, error: 'Ogiltig eller utgÃ¥ngen verifieringslÃ¤nk.' }
       }
 
       const found = members[0]
@@ -386,7 +386,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  // ── Request Password Reset ───────────────────────────
+  // â”€â”€ Request Password Reset â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const requestPasswordReset = async (email: string) => {
     try {
@@ -433,28 +433,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const resetUrl = `${window.location.origin}/reset-password?token=${token}`
 
-      // ── Send password reset email via Pages Function ──
+      // â”€â”€ Send password reset email via Pages Function â”€â”€
       try {
-        console.log('📧 Sending password reset email to:', found.email)
+        console.log('ðŸ“§ Sending password reset email to:', found.email)
 
-        const res = await fetch('/send-email', {
+        const res = await fetch('/send-password-reset', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             to: found.email,
             name: found.name,
-            subject: 'Återställ ditt lösenord',
+            subject: 'Ã…terstÃ¤ll ditt lÃ¶senord',
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #1e3a5f;">Återställ ditt lösenord</h2>
+                <h2 style="color: #1e3a5f;">Ã…terstÃ¤ll ditt lÃ¶senord</h2>
                 <p>Hej ${found.name},</p>
-                <p>Du har begärt att återställa ditt lösenord. Klicka på länken nedan:</p>
+                <p>Du har begÃ¤rt att Ã¥terstÃ¤lla ditt lÃ¶senord. Klicka pÃ¥ lÃ¤nken nedan:</p>
                 <p style="margin: 24px 0;">
                   <a href="${resetUrl}" style="background: #e0bd4a; color: #1e3a5f; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                    Återställ lösenord
+                    Ã…terstÃ¤ll lÃ¶senord
                   </a>
                 </p>
-                <p style="color: #999; font-size: 12px;">Länken är giltig i 1 timme.</p>
+                <p style="color: #999; font-size: 12px;">LÃ¤nken Ã¤r giltig i 1 timme.</p>
               </div>
             `,
           }),
@@ -462,22 +462,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (!res.ok) {
           const errorText = await res.text()
-          console.error('❌ Password reset email error:', res.status, errorText)
+          console.error('âŒ Password reset email error:', res.status, errorText)
         } else {
-          console.log('✅ Password reset email sent via Pages Function')
+          console.log('âœ… Password reset email sent via Pages Function')
         }
       } catch (err) {
-        console.error('❌ Failed to send password reset email:', err)
+        console.error('âŒ Failed to send password reset email:', err)
       }
 
       return { success: true }
     } catch (err) {
       console.error('Password reset request error:', err)
-      return { success: false, error: 'Kunde inte skicka återställningslänk.' }
+      return { success: false, error: 'Kunde inte skicka Ã¥terstÃ¤llningslÃ¤nk.' }
     }
   }
 
-  // ── Reset Password ───────────────────────────────────
+  // â”€â”€ Reset Password â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const resetPassword = async (token: string, newPassword: string) => {
     try {
@@ -495,7 +495,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const members = data?.members
       if (!members || members.length === 0) {
-        return { success: false, error: 'Ogiltig eller utgången länk.' }
+        return { success: false, error: 'Ogiltig eller utgÃ¥ngen lÃ¤nk.' }
       }
 
       const found = members[0]
@@ -503,7 +503,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const expiry = new Date(found.resetTokenExpiry)
 
       if (now > expiry) {
-        return { success: false, error: 'Länken har utgått. Begär en ny återställning.' }
+        return { success: false, error: 'LÃ¤nken har utgÃ¥tt. BegÃ¤r en ny Ã¥terstÃ¤llning.' }
       }
 
       const hashedPassword = hashPassword(newPassword)
@@ -537,7 +537,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  // ── Logout ──────────────────────────────────────────
+  // â”€â”€ Logout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   const logout = () => {
     setUser(null)
@@ -573,3 +573,4 @@ export function useAuth() {
   }
   return context
 }
+
