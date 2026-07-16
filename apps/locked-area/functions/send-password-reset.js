@@ -6,7 +6,7 @@
 
   try {
     const { to, name, resetUrl } = await request.json();
-    const RESEND_API_KEY = env.RESEND_API_KEY || env.RESEND_API_KEY_email || 're_XjxWC9po_PTu57eFrBJeiSuTMtKyWopMj';
+    const RESEND_API_KEY = env.RESEND_API_KEY || env.RESEND_API_KEY_email;
 
     if (!RESEND_API_KEY) {
       return new Response(JSON.stringify({ error: 'Missing API key' }), { 
@@ -42,3 +42,4 @@
     });
   }
 }
+
