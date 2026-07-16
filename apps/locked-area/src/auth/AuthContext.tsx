@@ -198,18 +198,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (errors) {
         console.error('GraphQL errors:', JSON.stringify(errors, null, 2))
-        return { success: false, error: errors[0]?.message || 'Databasfel. FÃ¶rsÃ¶k igen.' }
+        return { success: false, error: errors[0]?.message || 'Databasfel. FörsÃ¶k igen.' }
       }
 
       const members = data?.members
       if (!members || members.length === 0) {
-        return { success: false, error: 'Felaktig e-post eller lÃ¶senord' }
+        return { success: false, error: 'Felaktig e-post eller lösenord' }
       }
 
       const found = members[0]
 
       if (found.password !== hashedPassword) {
-        return { success: false, error: 'Felaktig e-post eller lÃ¶senord' }
+        return { success: false, error: 'Felaktig e-post eller lösenord' }
       }
 
       if (!found.isVerified) {
@@ -217,7 +217,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       if (!found.isApproved) {
-        return { success: false, error: 'Ditt konto vÃ¤ntar pÃ¥ godkÃ¤nnande frÃ¥n administratÃ¶ren.' }
+        return { success: false, error: 'Ditt konto väntar pÃ¥ godkännande frÃ¥n administratÃ¶ren.' }
       }
 
       const memberData: Member = {
@@ -236,7 +236,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: true }
     } catch (err) {
       console.error('Login error:', err)
-      return { success: false, error: 'Ett fel uppstod. FÃ¶rsÃ¶k igen.' }
+      return { success: false, error: 'Ett fel uppstod. FörsÃ¶k igen.' }
     }
   }
 
@@ -278,11 +278,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (errors) {
         console.error('GraphQL errors:', JSON.stringify(errors, null, 2))
-        return { success: false, error: 'Kunde inte skapa konto. FÃ¶rsÃ¶k igen.' }
+        return { success: false, error: 'Kunde inte skapa konto. FörsÃ¶k igen.' }
       }
 
       if (!data?.createMember) {
-        return { success: false, error: 'Kunde inte skapa konto. FÃ¶rsÃ¶k igen.' }
+        return { success: false, error: 'Kunde inte skapa konto. FörsÃ¶k igen.' }
       }
 
       const memberId = data.createMember.id
@@ -326,7 +326,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     } catch (err) {
       console.error('Register error:', err)
-      return { success: false, error: 'Ett fel uppstod. FÃ¶rsÃ¶k igen.' }
+      return { success: false, error: 'Ett fel uppstod. FörsÃ¶k igen.' }
     }
   }
 
@@ -481,7 +481,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: true }
     } catch (err) {
       console.error('Password reset request error:', err)
-      return { success: false, error: 'Kunde inte skicka Ã¥terstÃ¤llningslÃ¤nk.' }
+      return { success: false, error: 'Kunde inte skicka återstÃ¤llningslÃ¤nk.' }
     }
   }
 
@@ -511,7 +511,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const expiry = new Date(found.resetTokenExpiry)
 
       if (now > expiry) {
-        return { success: false, error: 'LÃ¤nken har utgÃ¥tt. BegÃ¤r en ny Ã¥terstÃ¤llning.' }
+        return { success: false, error: 'LÃ¤nken har utgått. BegÃ¤r en ny återstÃ¤llning.' }
       }
 
       const hashedPassword = hashPassword(newPassword)

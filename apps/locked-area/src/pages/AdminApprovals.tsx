@@ -46,7 +46,7 @@ export default function AdminApprovals() {
     )
     setLoading(false)
     if (errors) {
-      setError('Kunde inte hÃ¤mta anvÃ¤ndare.')
+      setError('Kunde inte hÃ¤mta användare.')
       console.error(errors)
     } else {
       setPendingUsers(data?.members || [])
@@ -135,7 +135,7 @@ export default function AdminApprovals() {
 
   const denyUser = async (id: string) => {
     console.log('âŒ Deny button clicked for ID:', id)
-    const confirmed = window.confirm('Ã„r du sÃ¤ker pÃ¥ att du vill neka denna anvÃ¤ndare?')
+    const confirmed = window.confirm('Ã„r du sÃ¤ker pÃ¥ att du vill neka denna användare?')
     if (!confirmed) return
 
     setPendingUsers((prev) => prev.filter((user) => user.id !== id))
@@ -176,9 +176,9 @@ export default function AdminApprovals() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">GodkÃ¤nn nya anvÃ¤ndare</h1>
+      <h1 className="text-2xl font-bold mb-4">GodkÃ¤nn nya användare</h1>
       {pendingUsers.length === 0 ? (
-        <p>Inga anvÃ¤ndare vÃ¤ntar pÃ¥ godkÃ¤nnande.</p>
+        <p>Inga användare väntar pÃ¥ godkännande.</p>
       ) : (
         <ul className="space-y-4">
           {pendingUsers.map((user) => (
