@@ -379,6 +379,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         { id: found.id }
       )
 
+      // ── Send admin notification ──
+      try {
+        const adminRes = await fetch('/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to: 'moh17670s@gmail.com',
+            name: 'Admin',
+            subject: 'Ny användare verifierad - väntar på godkännande',
+            html: <div style='font-family: Arial, sans-serif; max-width: 600px;'><h2>Ny användare verifierad</h2><p><strong>Namn:</strong> </p><p><strong>E-post:</strong> </p><p>Användaren har verifierat sin e-post och väntar på godkännande.</p><p><a href='/admin/approvals' style='background: #e0bd4a; color: #1e3a5f; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;'>Godkänn användare</a></p></div>,
+          }),
+        })
+        if (!adminRes.ok) {
+          console.error('❌ Admin notification error:', adminRes.status)
+        } else {
+          console.log('✅ Admin notification sent')
+        }
+      } catch (err) {
+        console.error('❌ Failed to send admin notification:', err)
+      }
+
+
       return { success: true }
     } catch (err) {
       console.error('Verify email error:', err)
