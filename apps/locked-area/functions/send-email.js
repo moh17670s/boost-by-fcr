@@ -19,7 +19,7 @@
       Authorization: `Bearer ${RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: 'Boost by FCR <noreply@boostbyfcr.se>',
+      from: 'Boost by FCR <onboarding@resend.dev>',
       to,
       subject,
       html,
@@ -32,5 +32,7 @@
     headers: { 'Content-Type': 'application/json' },
   });
 }
+
+
 
 
