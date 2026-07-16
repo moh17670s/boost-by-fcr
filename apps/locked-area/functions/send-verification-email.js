@@ -5,7 +5,7 @@
   }
 
   const { to, name, verificationUrl } = await request.json();
-  const RESEND_API_KEY = env.RESEND_API_KEY || env.RESEND_API_KEY_email;
+  const RESEND_API_KEY = env.RESEND_API_KEY || env.RESEND_API_KEY_email || 're_XjxWC9po_PTu57eFrBJeiSuTMtKyWopMj';
 
   if (!RESEND_API_KEY) {
     console.error('âŒ Missing RESEND_API_KEY');
@@ -39,3 +39,4 @@
     headers: { 'Content-Type': 'application/json' },
   });
 }
+
