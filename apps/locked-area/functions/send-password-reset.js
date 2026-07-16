@@ -1,5 +1,11 @@
 ﻿export async function onRequest(context) {
   const { request, env } = context;
+  
+  // Debug: log available env vars
+  console.log('Available env vars:', Object.keys(env));
+  console.log('RESEND_API_KEY exists:', !!env.RESEND_API_KEY);
+  console.log('RESEND_API_KEY_email exists:', !!env.RESEND_API_KEY_email);
+  
   if (request.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 });
   }
@@ -9,8 +15,8 @@
     const RESEND_API_KEY = env.RESEND_API_KEY || env.RESEND_API_KEY_email;
 
     if (!RESEND_API_KEY) {
-      console.error('Missing RESEND_API_KEY');
-      return new Response(JSON.stringify({ error: 'Missing API key' }), { 
+      console.error('Missing RESEND_API_KEY. Available keys:', Object.keys(env).join(', '));
+      return new Response(JSON.stringify({ error: 'Missing API key', availableKeys: Object.keys(env) }), { 
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
